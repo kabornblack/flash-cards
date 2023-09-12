@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./index.css";
 
 const questions = [
@@ -32,6 +33,11 @@ const questions = [
       "What do we call an input element that is completely synchronised with state?",
     answer: "Controlled element",
   },
+  {
+    id: 9002,
+    question: "Is React a library or a framework?",
+    answer: "A Library",
+  },
 ];
 
 export default function App() {
@@ -43,5 +49,25 @@ export default function App() {
 }
 
 function FlashCards() {
-  return <div>TODO</div>;
+  const [selectedId, setSelectedId] = useState(null);
+
+  function handleClick(id) {
+    setSelectedId(id !== selectedId ? id : null);
+  }
+
+  return (
+    <div className="flashcards">
+      {questions.map((question) => (
+        <div
+          key={question.id}
+          onClick={() => handleClick(question.id)}
+          className={question.id === selectedId ? "selected" : ""}
+        >
+          <p>
+            {question.id === selectedId ? question.answer : question.question}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
 }
